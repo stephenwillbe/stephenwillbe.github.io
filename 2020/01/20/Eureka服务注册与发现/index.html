@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux," />
+  <meta name="keywords" content="SpringCloud," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="1.需要Linux环境上安装配置nginx可以参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;w410589502&#x2F;article&#x2F;details&#x2F;70787468 2. 修改端口号默认端口号为80，因为通常80端口都是服务于tomcat的，所以这里我们需要修改一下端口号。（1）进入配置文件文件夹 1cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf  注：这里是usr下的，不是我们解压安装包">
+<meta name="description" content="1.CAP原则（与zookeeper对比）回顾CAP原则RDBMS(Mysql、Oracle、sqlServer) &#x3D;&#x3D;&#x3D;&gt;ACID NoSQL(redis、mongdb) &#x3D;&#x3D;&#x3D;&gt;CAP ACID是什么？ A  (Atomicity)  原子性 C  (Consistency)  一致性 I  (IsoIation)  隔离性 D  (Durability)  持久性  CAP是什么">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nginx实现无端口域名访问">
-<meta property="og:url" content="http://yoursite.com/2019/12/08/Nginx%E5%AE%9E%E7%8E%B0%E6%97%A0%E7%AB%AF%E5%8F%A3%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE/index.html">
+<meta property="og:title" content="Eureka服务注册与发现">
+<meta property="og:url" content="http://yoursite.com/2020/01/20/Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Stephen的博客">
-<meta property="og:description" content="1.需要Linux环境上安装配置nginx可以参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;w410589502&#x2F;article&#x2F;details&#x2F;70787468 2. 修改端口号默认端口号为80，因为通常80端口都是服务于tomcat的，所以这里我们需要修改一下端口号。（1）进入配置文件文件夹 1cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf  注：这里是usr下的，不是我们解压安装包">
+<meta property="og:description" content="1.CAP原则（与zookeeper对比）回顾CAP原则RDBMS(Mysql、Oracle、sqlServer) &#x3D;&#x3D;&#x3D;&gt;ACID NoSQL(redis、mongdb) &#x3D;&#x3D;&#x3D;&gt;CAP ACID是什么？ A  (Atomicity)  原子性 C  (Consistency)  一致性 I  (IsoIation)  隔离性 D  (Durability)  持久性  CAP是什么">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-12-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-05T16:07:20.957Z">
+<meta property="article:published_time" content="2020-01-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-05T17:43:11.927Z">
 <meta property="article:author" content="Stephen">
-<meta property="article:tag" content="linux">
+<meta property="article:tag" content="SpringCloud">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/12/08/Nginx实现无端口域名访问/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/20/Eureka服务注册与发现/"/>
 
 
 
 
 
-  <title>Nginx实现无端口域名访问 | Stephen的博客</title>
+  <title>Eureka服务注册与发现 | Stephen的博客</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/08/Nginx%E5%AE%9E%E7%8E%B0%E6%97%A0%E7%AB%AF%E5%8F%A3%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stephen">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Nginx实现无端口域名访问</h1>
+          <h1 class="post-title" itemprop="name headline">Eureka服务注册与发现</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-08T00:00:00+08:00">
-                2019-12-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-20T00:00:00+08:00">
+                2020-01-20
               </time>
             
 
@@ -330,31 +330,45 @@
       
 
       
-        <h2 id="1-需要Linux环境上安装配置nginx"><a href="#1-需要Linux环境上安装配置nginx" class="headerlink" title="1.需要Linux环境上安装配置nginx"></a>1.需要Linux环境上安装配置nginx</h2><p>可以参考博客：<a href="https://blog.csdn.net/w410589502/article/details/70787468" target="_blank" rel="noopener">https://blog.csdn.net/w410589502/article/details/70787468</a></p>
-<h2 id="2-修改端口号"><a href="#2-修改端口号" class="headerlink" title="2. 修改端口号"></a>2. 修改端口号</h2><p>默认端口号为80，因为通常80端口都是服务于tomcat的，所以这里我们需要修改一下端口号。<br>（1）进入配置文件文件夹</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/conf</span><br></pre></td></tr></table></figure>
-
-<p>注：这里是usr下的，不是我们解压安装包路径下的。<br>（2）备份配置文件（备份是个好习惯，可省略）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp nginx.conf nginx.conf.back</span><br></pre></td></tr></table></figure>
-
-<p>（3）编辑nginx.conf配置文件,nginx.conf为默认读取文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim nginx.conf</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-配置文件"><a href="#3-配置文件" class="headerlink" title="3.配置文件"></a>3.配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">listen 80;<span class="comment">#监听80端口</span></span><br><span class="line">server_name yourdomain.com;</span><br><span class="line">access_log off;</span><br><span class="line">error_log off;</span><br><span class="line">location / &#123;</span><br><span class="line">proxy_pass http://需要反代的服务器IP/;<span class="comment">#代理ip,如127.0.0.1:8080</span></span><br><span class="line">proxy_redirect off;</span><br><span class="line">proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">proxy_max_temp_file_size 0;</span><br><span class="line">client_max_body_size 10m;</span><br><span class="line">client_body_buffer_size 128k;</span><br><span class="line">proxy_connect_timeout 90;</span><br><span class="line">proxy_send_timeout 90;</span><br><span class="line">proxy_read_timeout 90;</span><br><span class="line">proxy_buffer_size 4k;</span><br><span class="line">proxy_buffers 4 32k;</span><br><span class="line">proxy_busy_buffers_size 64k;</span><br><span class="line">proxy_temp_file_write_size 64k;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后保存文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:wq</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-设置防火墙，允许80端口访问"><a href="#4-设置防火墙，允许80端口访问" class="headerlink" title="4.设置防火墙，允许80端口访问"></a>4.设置防火墙，允许80端口访问</h2><p>linux指令设置防火墙，云服务器上也要配置安全组</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启端口</span></span><br><span class="line">firewall-cmd --zone=public --add-port=8080/tcp --permanent</span><br><span class="line"><span class="comment">#重启防火墙</span></span><br><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-重载nginx"><a href="#5-重载nginx" class="headerlink" title="5.重载nginx"></a>5.重载nginx</h2><p><strong>（1）先进入nginx的目录</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin</span><br></pre></td></tr></table></figure>
-
-<p><strong>（2）再执行命令</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./nginx 开启</span><br><span class="line">./nginx -s stop 停止</span><br><span class="line">./nginx -s quit</span><br><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-启动项目"><a href="#6-启动项目" class="headerlink" title="6.启动项目"></a>6.启动项目</h2><p>直接访问ip即可</p>
+        <h2 id="1-CAP原则（与zookeeper对比）"><a href="#1-CAP原则（与zookeeper对比）" class="headerlink" title="1.CAP原则（与zookeeper对比）"></a>1.CAP原则（与zookeeper对比）</h2><h4 id="回顾CAP原则"><a href="#回顾CAP原则" class="headerlink" title="回顾CAP原则"></a>回顾CAP原则</h4><p>RDBMS(Mysql、Oracle、sqlServer) ===&gt;ACID</p>
+<p>NoSQL(redis、mongdb) ===&gt;CAP</p>
+<h3 id="ACID是什么？"><a href="#ACID是什么？" class="headerlink" title="ACID是什么？"></a>ACID是什么？</h3><ul>
+<li>A  (Atomicity)  原子性</li>
+<li>C  (Consistency)  一致性</li>
+<li>I  (IsoIation)  隔离性</li>
+<li>D  (Durability)  持久性</li>
+</ul>
+<h3 id="CAP是什么？"><a href="#CAP是什么？" class="headerlink" title="CAP是什么？"></a>CAP是什么？</h3><ul>
+<li>C (Consistency)  强一致性</li>
+<li>A  (Availabitlity)   可用性</li>
+<li>P  (Partition  tolerance)  分区容错性</li>
+</ul>
+<p>CAP的三进二：CA、AP、CP</p>
+<h3 id="CAP理论的核心"><a href="#CAP理论的核心" class="headerlink" title="CAP理论的核心"></a>CAP理论的核心</h3><ul>
+<li>一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求</li>
+<li>根据CAP原理，将NoSQL数据库分成了满足CA原则，满足CP原则和满足AP原则三大类：<ul>
+<li>CA:单点集群，满足一致性，可用性的系统，通常可扩展性较差</li>
+<li>CP:满足一致性，分区容错性的系统，通常性能不是特别高</li>
+<li>AP：满足可用性，分区容错性的系统，通常可能对一致性要求低一些</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-作为服务注册中心，Eureka比Zookeeper好在哪里？"><a href="#2-作为服务注册中心，Eureka比Zookeeper好在哪里？" class="headerlink" title="2.作为服务注册中心，Eureka比Zookeeper好在哪里？"></a>2.作为服务注册中心，Eureka比Zookeeper好在哪里？</h2><p>著名的CAP理论指出，一个分布式系统不可能同时满足C（一致性）、A（可用性）、P（容错性）。</p>
+<p>由于分区容错性在分布式系统中是必须要保证的，因此我们只能在A和C之间进行权衡。</p>
+<ul>
+<li>Zookeeper保证的是CP</li>
+<li>Eureka保证的事AP</li>
+</ul>
+<p>Zookeeper：</p>
+<p>当zk注册中心服务宕机，master节点就会与其他节点失去联系时，剩余的节点就会重新选举出一个leader当master节点，问题在于选举leader的时间太长30-120s，且选举期间zk集群都是不可用的，就导致了选举期间注册服务瘫痪。</p>
+<p>Eureka：</p>
+<p>Eureka看明白了这一点，因此设计时就优先保证可用性。Eureka<strong>各个节点都是平等的</strong>，几个节点挂了都不会影响正常节点的工作。连接失败的时候会自动切换到其他节点。而且Eureka有自我保护机制，15分钟内超过85%的节点没有正常的心跳，就认为Eureka出现网络故障，会有以下措施：</p>
+<ol>
+<li>不再从注册中心移除因时间长没收到心跳而过期的服务</li>
+<li>仍然能够接收新服务的注册和查询请求，但是不会被同步到其他节点上</li>
+<li>网络稳定时，当前实例新的注册信息会被同步到其他节点中</li>
+</ol>
+<p><strong>因此，Eureka可以很好的应对因网络故障导致部分节点失去联系，而不会想zookeeper那样使整个注册服务瘫痪</strong></p>
 
       
     </div>
@@ -372,7 +386,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/SpringCloud/" rel="tag"># SpringCloud</a>
           
         </div>
       
@@ -385,8 +399,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/04/HashMap%E4%B8%8EHashTable/" rel="next" title="HashMap与HashTable">
-                <i class="fa fa-chevron-left"></i> HashMap与HashTable
+              <a href="/2019/12/08/Nginx%E5%AE%9E%E7%8E%B0%E6%97%A0%E7%AB%AF%E5%8F%A3%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE/" rel="next" title="Nginx实现无端口域名访问">
+                <i class="fa fa-chevron-left"></i> Nginx实现无端口域名访问
               </a>
             
           </div>
@@ -395,8 +409,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/01/20/Eureka%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0/" rel="prev" title="Eureka服务注册与发现">
-                Eureka服务注册与发现 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/05/SpringBoot%E9%85%8D%E7%BD%AESSL/" rel="prev" title="SpringBoot配置SSL">
+                SpringBoot配置SSL <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -520,7 +534,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-需要Linux环境上安装配置nginx"><span class="nav-number">1.</span> <span class="nav-text">1.需要Linux环境上安装配置nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-修改端口号"><span class="nav-number">2.</span> <span class="nav-text">2. 修改端口号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-配置文件"><span class="nav-number">3.</span> <span class="nav-text">3.配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-设置防火墙，允许80端口访问"><span class="nav-number">4.</span> <span class="nav-text">4.设置防火墙，允许80端口访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-重载nginx"><span class="nav-number">5.</span> <span class="nav-text">5.重载nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-启动项目"><span class="nav-number">6.</span> <span class="nav-text">6.启动项目</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-CAP原则（与zookeeper对比）"><span class="nav-number">1.</span> <span class="nav-text">1.CAP原则（与zookeeper对比）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回顾CAP原则"><span class="nav-number">1.0.1.</span> <span class="nav-text">回顾CAP原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID是什么？"><span class="nav-number">1.1.</span> <span class="nav-text">ACID是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP是什么？"><span class="nav-number">1.2.</span> <span class="nav-text">CAP是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAP理论的核心"><span class="nav-number">1.3.</span> <span class="nav-text">CAP理论的核心</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-作为服务注册中心，Eureka比Zookeeper好在哪里？"><span class="nav-number">2.</span> <span class="nav-text">2.作为服务注册中心，Eureka比Zookeeper好在哪里？</span></a></li></ol></div>
             
 
           </div>
