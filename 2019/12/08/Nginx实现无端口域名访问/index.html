@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="linux," />
 
 
 
@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="简单使用方法： \1. star 本项目仓库^o^ \2. 安装[Git](Git - Downloads), 安装nodeJS \3. 你可以直接fork一份源码到你的仓库，clone到本地 \4. 在本地博客仓库运行npm i命令安装依赖包 \5. 修改配置信息，改成自己的信息 \6. 运行命令hexo clean（清除生成文件），hexo g（生成网页）， hexo s（本地预览），hexo">
+<meta name="description" content="1.需要Linux环境上安装配置nginx可以参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;w410589502&#x2F;article&#x2F;details&#x2F;70787468 2. 修改端口号默认端口号为80，因为通常80端口都是服务于tomcat的，所以这里我们需要修改一下端口号。（1）进入配置文件文件夹 1cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf  注：这里是usr下的，不是我们解压安装包">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo搭建">
-<meta property="og:url" content="http://yoursite.com/2018/10/30/hexo%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:title" content="Nginx实现无端口域名访问">
+<meta property="og:url" content="http://yoursite.com/2019/12/08/Nginx%E5%AE%9E%E7%8E%B0%E6%97%A0%E7%AB%AF%E5%8F%A3%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE/index.html">
 <meta property="og:site_name" content="Stephen的博客">
-<meta property="og:description" content="简单使用方法： \1. star 本项目仓库^o^ \2. 安装[Git](Git - Downloads), 安装nodeJS \3. 你可以直接fork一份源码到你的仓库，clone到本地 \4. 在本地博客仓库运行npm i命令安装依赖包 \5. 修改配置信息，改成自己的信息 \6. 运行命令hexo clean（清除生成文件），hexo g（生成网页）， hexo s（本地预览），hexo">
+<meta property="og:description" content="1.需要Linux环境上安装配置nginx可以参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;w410589502&#x2F;article&#x2F;details&#x2F;70787468 2. 修改端口号默认端口号为80，因为通常80端口都是服务于tomcat的，所以这里我们需要修改一下端口号。（1）进入配置文件文件夹 1cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf  注：这里是usr下的，不是我们解压安装包">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2018-10-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-05T15:30:08.902Z">
+<meta property="article:published_time" content="2019-12-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-05T16:07:20.957Z">
 <meta property="article:author" content="Stephen">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/10/30/hexo搭建/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/08/Nginx实现无端口域名访问/"/>
 
 
 
 
 
-  <title>hexo搭建 | Stephen的博客</title>
+  <title>Nginx实现无端口域名访问 | Stephen的博客</title>
   
 
 
@@ -262,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/hexo%E6%90%AD%E5%BB%BA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/08/Nginx%E5%AE%9E%E7%8E%B0%E6%97%A0%E7%AB%AF%E5%8F%A3%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stephen">
@@ -279,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hexo搭建</h1>
+          <h1 class="post-title" itemprop="name headline">Nginx实现无端口域名访问</h1>
         
 
         <div class="post-meta">
@@ -291,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T00:00:00+08:00">
-                2018-10-30
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-08T00:00:00+08:00">
+                2019-12-08
               </time>
             
 
@@ -329,25 +330,31 @@
       
 
       
-        <p><strong>简单使用方法：</strong></p>
-<p>\1. <code>star</code> 本项目仓库^o^</p>
-<p>\2. 安装[Git](<a href="https://link.zhihu.com/?target=https%3A//git-scm.com/downloads">Git - Downloads</a>), 安装<a href="[Node.js](https://link.zhihu.com/?target=https%3A//nodejs.org/en/)">nodeJS</a></p>
-<p>\3. 你可以直接<code>fork</code>一份源码到你的仓库，<code>clone</code>到本地</p>
-<p>\4. 在本地博客仓库运行<code>npm i</code>命令安装依赖包</p>
-<p>\5. 修改配置信息，改成自己的信息</p>
-<p>\6. 运行命令<code>hexo clean</code>（清除生成文件），<code>hexo g</code>（生成网页）， <code>hexo s</code>（本地预览），<code>hexo d</code>（部署）</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="新建博客"><a href="#新建博客" class="headerlink" title="新建博客"></a>新建博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h2 id="1-需要Linux环境上安装配置nginx"><a href="#1-需要Linux环境上安装配置nginx" class="headerlink" title="1.需要Linux环境上安装配置nginx"></a>1.需要Linux环境上安装配置nginx</h2><p>可以参考博客：<a href="https://blog.csdn.net/w410589502/article/details/70787468" target="_blank" rel="noopener">https://blog.csdn.net/w410589502/article/details/70787468</a></p>
+<h2 id="2-修改端口号"><a href="#2-修改端口号" class="headerlink" title="2. 修改端口号"></a>2. 修改端口号</h2><p>默认端口号为80，因为通常80端口都是服务于tomcat的，所以这里我们需要修改一下端口号。<br>（1）进入配置文件文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/conf</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="运行服务"><a href="#运行服务" class="headerlink" title="运行服务"></a>运行服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>注：这里是usr下的，不是我们解压安装包路径下的。<br>（2）备份配置文件（备份是个好习惯，可省略）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp nginx.conf nginx.conf.back</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="生成文件"><a href="#生成文件" class="headerlink" title="生成文件"></a>生成文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>（3）编辑nginx.conf配置文件,nginx.conf为默认读取文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim nginx.conf</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="上传到远端"><a href="#上传到远端" class="headerlink" title="上传到远端"></a>上传到远端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h2 id="3-配置文件"><a href="#3-配置文件" class="headerlink" title="3.配置文件"></a>3.配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">listen 80;<span class="comment">#监听80端口</span></span><br><span class="line">server_name yourdomain.com;</span><br><span class="line">access_log off;</span><br><span class="line">error_log off;</span><br><span class="line">location / &#123;</span><br><span class="line">proxy_pass http://需要反代的服务器IP/;<span class="comment">#代理ip,如127.0.0.1:8080</span></span><br><span class="line">proxy_redirect off;</span><br><span class="line">proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">proxy_max_temp_file_size 0;</span><br><span class="line">client_max_body_size 10m;</span><br><span class="line">client_body_buffer_size 128k;</span><br><span class="line">proxy_connect_timeout 90;</span><br><span class="line">proxy_send_timeout 90;</span><br><span class="line">proxy_read_timeout 90;</span><br><span class="line">proxy_buffer_size 4k;</span><br><span class="line">proxy_buffers 4 32k;</span><br><span class="line">proxy_busy_buffers_size 64k;</span><br><span class="line">proxy_temp_file_write_size 64k;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: [Deployment](</p>
+<p>然后保存文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:wq</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-设置防火墙，允许80端口访问"><a href="#4-设置防火墙，允许80端口访问" class="headerlink" title="4.设置防火墙，允许80端口访问"></a>4.设置防火墙，允许80端口访问</h2><p>linux指令设置防火墙，云服务器上也要配置安全组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启端口</span></span><br><span class="line">firewall-cmd --zone=public --add-port=8080/tcp --permanent</span><br><span class="line"><span class="comment">#重启防火墙</span></span><br><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-重载nginx"><a href="#5-重载nginx" class="headerlink" title="5.重载nginx"></a>5.重载nginx</h2><p><strong>（1）先进入nginx的目录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin</span><br></pre></td></tr></table></figure>
+
+<p><strong>（2）再执行命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./nginx 开启</span><br><span class="line">./nginx -s stop 停止</span><br><span class="line">./nginx -s quit</span><br><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-启动项目"><a href="#6-启动项目" class="headerlink" title="6.启动项目"></a>6.启动项目</h2><p>直接访问ip即可</p>
 
       
     </div>
@@ -363,6 +370,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
 
       
       
@@ -372,14 +385,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/12/04/HashMap%E4%B8%8EHashTable/" rel="next" title="HashMap与HashTable">
+                <i class="fa fa-chevron-left"></i> HashMap与HashTable
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/04/HashMap%E4%B8%8EHashTable/" rel="prev" title="HashMap与HashTable">
-                HashMap与HashTable <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/05/SpringBoot%E9%85%8D%E7%BD%AESSL/" rel="prev" title="SpringBoot配置SSL">
+                SpringBoot配置SSL <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -503,7 +520,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建博客"><span class="nav-number">1.1.</span> <span class="nav-text">新建博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行服务"><span class="nav-number">1.2.</span> <span class="nav-text">运行服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成文件"><span class="nav-number">1.3.</span> <span class="nav-text">生成文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传到远端"><span class="nav-number">1.4.</span> <span class="nav-text">上传到远端</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-需要Linux环境上安装配置nginx"><span class="nav-number">1.</span> <span class="nav-text">1.需要Linux环境上安装配置nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-修改端口号"><span class="nav-number">2.</span> <span class="nav-text">2. 修改端口号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-配置文件"><span class="nav-number">3.</span> <span class="nav-text">3.配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-设置防火墙，允许80端口访问"><span class="nav-number">4.</span> <span class="nav-text">4.设置防火墙，允许80端口访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-重载nginx"><span class="nav-number">5.</span> <span class="nav-text">5.重载nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-启动项目"><span class="nav-number">6.</span> <span class="nav-text">6.启动项目</span></a></li></ol></div>
             
 
           </div>
