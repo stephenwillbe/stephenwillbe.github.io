@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="以前没怎么用过mybatis，只知道与hibernate一样是个orm数据库框架。随着使用熟练度的增加，发现它与hibernate区别是非常大的，结合至今为止的经验，总结出以下几点：  hibernate是全自动，而mybatis是半自动。  hibernate完全可以通过对象关系模型实现对数据库的操作，拥有完整的JavaBean对象与数据库的映射结构来自动生成sql。而mybatis仅有基本的字">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2020/06/09/hello-world/index.html">
+<meta property="og:title" content="hibernate和Mybatis">
+<meta property="og:url" content="http://yoursite.com/2020/06/13/hibernate%E5%92%8CMybatis/index.html">
 <meta property="og:site_name" content="Stephen的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="以前没怎么用过mybatis，只知道与hibernate一样是个orm数据库框架。随着使用熟练度的增加，发现它与hibernate区别是非常大的，结合至今为止的经验，总结出以下几点：  hibernate是全自动，而mybatis是半自动。  hibernate完全可以通过对象关系模型实现对数据库的操作，拥有完整的JavaBean对象与数据库的映射结构来自动生成sql。而mybatis仅有基本的字">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-06-09T07:07:53.836Z">
-<meta property="article:modified_time" content="2020-06-09T07:07:53.836Z">
+<meta property="article:published_time" content="2020-06-13T13:12:47.000Z">
+<meta property="article:modified_time" content="2020-06-13T17:08:38.595Z">
 <meta property="article:author" content="Stephen">
 <meta name="twitter:card" content="summary">
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/06/09/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/06/13/hibernate和Mybatis/"/>
 
 
 
 
 
-  <title>Hello World | Stephen的博客</title>
+  <title>hibernate和Mybatis | Stephen的博客</title>
   
 
 
@@ -262,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/09/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/13/hibernate%E5%92%8CMybatis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stephen">
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">hibernate和Mybatis</h1>
         
 
         <div class="post-meta">
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-09T15:07:53+08:00">
-                2020-06-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-13T21:12:47+08:00">
+                2020-06-13
               </time>
             
 
@@ -329,19 +329,53 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>以前没怎么用过mybatis，只知道与hibernate一样是个orm数据库框架。随着使用熟练度的增加，发现它与hibernate区别是非常大的，结合至今为止的经验，总结出以下几点：</p>
+<ol>
+<li><strong>hibernate是全自动，而mybatis是半自动。</strong></li>
+</ol>
+<p>hibernate完全可以通过对象关系模型实现对数据库的操作，拥有完整的JavaBean对象与数据库的映射结构来自动生成sql。而mybatis仅有基本的字段映射，对象数据以及对象实际关系仍然需要通过手写sql来实现和管理。</p>
+<ol start="2">
+<li><strong>hibernate数据库移植性远大于mybatis。</strong></li>
+</ol>
+<p>hibernate通过它强大的映射结构和hql语言，大大降低了对象与数据库（oracle、mysql等）的耦合性，而mybatis由于需要手写sql，因此与数据库的耦合性直接取决于程序员写sql的方法，如果sql不具通用性而用了很多某数据库特性的sql语句的话，移植性也会随之降低很多，成本很高。</p>
+<ol start="3">
+<li><strong>hibernate拥有完整的日志系统，mybatis则欠缺一些。</strong></li>
+</ol>
+<p>hibernate日志系统非常健全，涉及广泛，包括：sql记录、关系异常、优化警告、缓存提示、脏数据警告等；而mybatis则除了基本记录功能外，功能薄弱很多。</p>
+<ol start="4">
+<li><strong>mybatis相比hibernate需要关心很多细节</strong></li>
+</ol>
+<p>hibernate配置要比mybatis复杂的多，学习成本也比mybatis高。但也正因为mybatis使用简单，才导致它要比hibernate关心很多技术细节。mybatis由于不用考虑很多细节，开发模式上与传统jdbc区别很小，因此很容易上手并开发项目，但忽略细节会导致项目前期bug较多，因而开发出相对稳定的软件很慢，而开发出软件却很快。hibernate则正好与之相反。但是如果使用hibernate很熟练的话，实际上开发效率丝毫不差于甚至超越mybatis。</p>
+<ol start="5">
+<li><strong>sql直接优化上，mybatis要比hibernate方便很多</strong></li>
+</ol>
+<p>由于mybatis的sql都是写在xml里，因此优化sql比hibernate方便很多。而hibernate的sql很多都是自动生成的，无法直接维护sql；虽有hql，但功能还是不及sql强大，见到报表等变态需求时，hql也歇菜，也就是说hql是有局限的；hibernate虽然也支持原生sql，但开发模式上却与orm不同，需要转换思维，因此使用上不是非常方便。总之写sql的灵活度上hibernate不及mybatis。</p>
+<p>总结：</p>
+<p>mybatis：小巧、方便、高效、简单、直接、半自动</p>
+<p>hibernate：强大、方便、高效、复杂、绕弯子、全自动</p>
+<p>mybatis：</p>
+<ol>
+<li><p>入门简单，即学即用，提供了数据库查询的自动对象绑定功能，而且延续了很好的SQL使用经验，对于没有那么高的对象模型要求的项目来说，相当完美。</p>
+</li>
+<li><p>可以进行更为细致的SQL优化，可以减少查询字段。</p>
+</li>
+<li><p>缺点就是框架还是比较简陋，功能尚有缺失，虽然简化了数据绑定代码，但是整个底层数据库查询实际还是要自己写的，工作量也比较大，而且不太容易适应快速数据库修改。</p>
+</li>
+<li><p>二级缓存机制不佳。</p>
+</li>
+</ol>
+<p>hibernate：</p>
+<ol>
+<li><p>功能强大，数据库无关性好，O/R映射能力强，如果你对Hibernate相当精通，而且对Hibernate进行了适当的封装，那么你的项目整个持久层代码会相当简单，需要写的代码很少，开发速度很快，非常爽。</p>
+</li>
+<li><p>有更好的二级缓存机制，可以使用第三方缓存。</p>
+</li>
+<li><p>缺点就是学习门槛不低，要精通门槛更高，而且怎么设计O/R映射，在性能和对象模型之间如何权衡取得平衡，以及怎样用好Hibernate方面需要你的经验和能力都很强才行。</p>
+</li>
+</ol>
+<p>举个形象的比喻：</p>
+<p>mybatis：机械工具，使用方便，拿来就用，但工作还是要自己来作，不过工具是活的，怎么使由我决定。﻿﻿</p>
+<p>hibernate：智能机器人，但研发它（学习、熟练度）的成本很高，工作都可以摆脱他了，但仅限于它能做的事。﻿﻿</p>
 
       
     </div>
@@ -366,8 +400,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/05/SpringBoot%E9%85%8D%E7%BD%AESSL/" rel="next" title="SpringBoot配置SSL">
-                <i class="fa fa-chevron-left"></i> SpringBoot配置SSL
+              <a href="/2020/06/13/Mysql-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="Mysql  底层结构">
+                <i class="fa fa-chevron-left"></i> Mysql  底层结构
               </a>
             
           </div>
@@ -376,8 +410,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/09/Redis-%E4%B8%80%E7%AF%87%E6%90%9E%E6%87%82%EF%BC%8C%E5%B0%B1%E7%A1%AC%E6%87%82/" rel="prev" title="Redis 一篇搞懂，就硬懂">
-                Redis 一篇搞懂，就硬懂 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/06/13/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B9%8B%E9%97%B4%E7%9A%84%E6%8E%A8%E9%80%81/" rel="prev" title="客户端和服务端之间的推送">
+                客户端和服务端之间的推送 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -430,17 +464,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -491,22 +516,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

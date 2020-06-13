@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mysql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="实例和数据库我们通常所说的 MySQL 数据库服务器由一个实例（instance）以及一个数据库（database）组成。实例包括一组后台进程&#x2F;线程和许多内存结构，用于管理数据库；数据库由一组磁盘文件组成，用于存储数据和日志等信息。MySQL 使用典型的客户端&#x2F;服务器（Client&#x2F;Server）结构，下图显示了一个简单的 MySQL 体系结构：  客户端通过通过实例中的后台进程访问 MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql  底层结构">
+<meta property="og:url" content="http://yoursite.com/2020/06/13/Mysql-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Stephen的博客">
+<meta property="og:description" content="实例和数据库我们通常所说的 MySQL 数据库服务器由一个实例（instance）以及一个数据库（database）组成。实例包括一组后台进程&#x2F;线程和许多内存结构，用于管理数据库；数据库由一组磁盘文件组成，用于存储数据和日志等信息。MySQL 使用典型的客户端&#x2F;服务器（Client&#x2F;Server）结构，下图显示了一个简单的 MySQL 体系结构：  客户端通过通过实例中的后台进程访问 MySQL">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200204171445203.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190831212522775.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191128180515523.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200207113542412.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2020-06-13T13:12:22.000Z">
+<meta property="article:modified_time" content="2020-06-13T17:07:04.909Z">
+<meta property="article:author" content="Stephen">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200204171445203.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/13/Mysql-数据结构/"/>
+
+
+
+
+
+  <title>Mysql  底层结构 | Stephen的博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stephen的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/13/Mysql-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stephen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stephen的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mysql  底层结构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-13T21:12:22+08:00">
+                2020-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>实例和数据库</strong><br>我们通常所说的 MySQL 数据库服务器由一个实例（instance）以及一个数据库（database）组成。实例包括一组后台进程/线程和许多内存结构，用于管理数据库；数据库由一组磁盘文件组成，用于存储数据和日志等信息。MySQL 使用典型的客户端/服务器（Client/Server）结构，下图显示了一个简单的 MySQL 体系结构：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200204171445203.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center" alt="mysql"></p>
+<p>客户端通过通过实例中的后台进程访问 MySQL 数据库。MySQL 采用单进程多线程架构，也就是说一个 MySQL 实例在操作系统中就是一个进程（mysqld）。在 Linux 系统中使用ps命令进行查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@sqlhost ~]<span class="comment"># ps -ef|grep mysql|grep -v grep</span></span><br><span class="line">mysql     7898     1  1 Feb03 ?        00:12:12 /usr/sbin/mysqld</span><br></pre></td></tr></table></figure>
+
+<p>严格来说，一个 MySQL 实例管理的是多个数据库（也叫模式，Schema）包括系统数据库 mysql、information_schema、performance_schema、sys 以及用户创建的数据库等。使用SHOW DATABASES或者SHOW SCHEMAS命令查看当前实例中的数据库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mydb               |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sys                |</span><br><span class="line">+--------------------+</span><br><span class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.14 sec)</span><br></pre></td></tr></table></figure>
+
+<p>数据库就像是一个容器，存储了各种对象。例如，数据表（Table）、视图（View）、存储过程（Stored Procedure）以及触发器（Trigger）等。其中，表是存储数据的主要对象。它们之间的关系如下图所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/20190831212522775.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center" alt="mysql database"></p>
+<p><strong>MySQL</strong> <strong>物理结构</strong><br>MySQL 的物理结构主要包括两个目录：软件的安装目录和数据目录，以及配置文件和日志文件等。</p>
+<p><img src="https://img-blog.csdnimg.cn/20191128180515523.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center" alt="mysql"></p>
+<p>📝不同平台、不同安装方式（源码安装、二进制解压）的目录结构有所不同，具体可以参考 MySQL 官方文档。</p>
+<p><strong>安装目录</strong><br>安装目录（Base Directory）是 MySQL 服务器的安装路径，Linux 上使用 RPM 包安装的默认位置为 /usr/。安装目录中主要包含以下内容：</p>
+<p>文件或目录    描述<br>bin/    mysql 客户端和实用程序目录<br>sbin/    mysqld 服务器程序目录<br>share/man/    Unix 帮助手册页目录<br>include/mysql/    头文件目录<br>lib/mysql/    库文件目录<br>share/mysql/    各种字符集、语言相关的错误信息目录<br>我们可以使用下面的命令查看安装目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show global variables like <span class="string">"%basedir%"</span>;</span><br><span class="line">+---------------+-------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------+-------+</span><br><span class="line">| basedir       | /usr/ |</span><br><span class="line">+---------------+-------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p><strong>数据目录</strong><br>数据目录（Data Directory）是 MySQL 存储数据库文件的位置，Linux 上使用 RPM 包安装的默认位置为 /var/lib/mysql/。数据目录中主要包含以下内容：</p>
+<p>文件或目录    描述<br>#innodb_temp/    InnoDB 会话临时表空间目录<br>mysql/    系统数据库 mysql 文件目录</p>
+<p><strong>MySQL</strong> <strong>逻辑结构</strong><br>MySQL 使用典型的客户端/服务器（Client/Server）结构，逻辑结构图如下所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200207113542412.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90b255ZG9uZy5ibG9nLmNzZG4ubmV0,size_16,color_FFFFFF,t_70#pic_center" alt="mysql logical"></p>
+<p>MySQL 体系结构大体可以分为三层：客户端、服务器层以及存储引擎层。其中，服务器层又包括了连接管理、查询缓存 、SQL 接口、解析器、优化器、缓冲与缓存以及各种管理工具与服务等。</p>
+<p>具体来说，每个组件的作用如下：</p>
+<ul>
+<li><strong>客户端</strong>，连接 MySQL 服务器的各种工具和应用程序。例如 mysql 命令行工具、mysqladmin 以及各种驱动程序等。</li>
+<li><strong>连接管理</strong>，负责监听和管理客户端的连接以及线程处理等。每一个连接到 MySQL 服务器的请求都会被分配一个连接线程。连接线程负责与客户端的通信，接受客户端发送的命令并且返回服务器处理的结果。</li>
+<li><strong>查询缓存</strong> ，用于将执行过的 SELECT 语句和结果缓存在内存中。每次执行查询之前判断是否命中缓存，如果命中直接返回缓存的结果。缓存命中需要满足许多条件，SQL 语句完全相同，上下文环境相同等。实际上除非是只读应用，查询缓存的失效频率非常高，任何对表的修改都会导致缓存失效；因此，查询缓存在 MySQL 8.0 中已经被删除。</li>
+<li><strong>SQL 接口</strong>，接收客户端发送的各种 DML和 DDL 命令，并且返回用户查询的结果。另外还包括所有的内置函数（日期、时间、数学以及加密函数）和跨存储引擎的功能，例如存储过程、触发器、视图等。</li>
+<li><strong>解析器</strong>，对 SQL 语句进行解析，例如语义和语法的分析和检查，以及对象访问权限检查等。</li>
+<li><strong>优化器</strong>，利用数据库的统计信息决定 SQL 语句的最佳执行方式。使用索引还是全表扫描的方式访问单个表，多表连接的实现方式等。优化器是决定查询性能的关键组件，而数据库的统计信息是优化器判断的基础。</li>
+<li><strong>缓存与缓冲</strong>，由一系列缓存组成的，例如数据缓存、索引缓存以及对象权限缓存等。对于已经访问过的磁盘数据，在缓冲区中进行缓存；下次访问时可以直接读取内存中的数据，从而减少磁盘 IO。</li>
+<li><strong>存储引擎</strong>，存储引擎是对底层物理数据执行实际操作的组件，为服务器层提供各种操作数据的 API。MySQL 支持插件式的存储引擎，包括 InnoDB、MyISAM、Memory 等。</li>
+<li><strong>管理工具</strong>，MySQL 提供的系统管理和控制工具，例如备份与恢复、复制、集群等。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/13/Spring-Bean/" rel="next" title="Spring Bean">
+                <i class="fa fa-chevron-left"></i> Spring Bean
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/13/hibernate%E5%92%8CMybatis/" rel="prev" title="hibernate和Mybatis">
+                hibernate和Mybatis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Stephen</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stephen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
